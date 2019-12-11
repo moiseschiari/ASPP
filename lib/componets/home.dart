@@ -14,34 +14,13 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  /* var categories = [
-    {
-      'title': 'Iglesias',
-      'img': 'iglesias.jpg',
-    },
-    {
-      'title': 'Parques',
-      'img': 'parques.jpg',
-    },
-    {
-      'title': 'Turismo',
-      'img': 'turismo.jpg',
-    },
-    {
-      'title': 'Instituciones',
-      'img': 'institucion.jpg',
-    },
-    {
-      'title': 'Museos',
-      'img': 'museo.jpg',
-    },
-  ];*/
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
+
         title: Text("A.S.P.P."),
       ),
       drawer: buildDrawer(),
@@ -81,10 +60,11 @@ class _HomeState extends State<Home> {
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => Category(
+                    builder: (context) => CategoryPage(
                         title: CategoriesModel[i]['title'],
                         image: CategoriesModel[i]['img'],
-                        publicSite: widget.site)))
+                        site: iglesiasSitios[i],
+                        )))
           },
         );
       },

@@ -1,8 +1,5 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:aspp/models/detailSites.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:aspp/componets/location.dart';
 
 /*class DetailsPage extends StatefulWidget {
@@ -107,9 +104,9 @@ class _DetailsPageState extends State<DetailsPage> {
   }
 }*/
 
-
 class DetailsPage extends StatefulWidget {
   final PublicSite site;
+
 
   const DetailsPage({Key key, @required this.site}) : super(key: key);
 
@@ -120,12 +117,20 @@ class DetailsPage extends StatefulWidget {
 //creamos el metodo detalle
 //este se usa cuando pulsamos para ver segunda pantalla la descripcion del ejercicio
 class Detalle extends State<DetailsPage> {
-  Detalle({this.id, this.nombre, this.imagen, this.descripcion});
+  Detalle(
+      {this.id,
+      this.nombre,
+      this.imagen,
+      this.descripcion,
+      this.lati,
+      this.longi});
 
   final int id;
   final String nombre;
   final String imagen;
   final String descripcion;
+  final double lati;
+  final double longi;
 
   @override
   Widget build(BuildContext context) {
@@ -149,14 +154,61 @@ class Detalle extends State<DetailsPage> {
           new IniciarNombre(
             nombre: widget.site.name,
           ),
-          new IniciarIcon(),
+          new Container(
+            height: 100,
+            padding: new EdgeInsets.all(1.0),
+            child: new Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                IconButton(
+                  icon: Icon(
+                    Icons.call,
+                  ),
+                  color: Colors.blue,
+                  iconSize: 40.0,
+                  onPressed: () {},
+                ),
+                IconButton(
+                  icon: Icon(Icons.schedule),
+                  iconSize: 40.0,
+                  color: Colors.blue,
+                  onPressed: () {},
+                ),
+                IconButton(
+                  icon: Icon(Icons.photo),
+                  iconSize: 40.0,
+                  color: Colors.blue,
+                  onPressed: () {},
+                ),
+                IconButton(
+                  icon: Icon(Icons.location_on),
+                  iconSize: 40.0,
+                  color: Colors.blue,
+                  onPressed: () {
+                    navigateToSubPage(context);
+                  },
+                ),
+              ],
+            ),
+          ),
           new Informacion(
             descripcion: widget.site.description,
           ),
-          new Maps(),
         ],
       ),
     );
+  }
+
+  Future navigateToSubPage(context) async {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => LocationPage(
+                  latitud: widget.site.lat,
+                  longitud: widget.site.lon,
+                  descripcion: widget.site.name,
+                  image: widget.site.image,
+                )));
   }
 }
 
@@ -212,55 +264,71 @@ class IniciarNombre extends StatelessWidget {
   }
 }
 
-
 class IniciarIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: new EdgeInsets.all(10.0),
+      padding: new EdgeInsets.all(5.0),
       child: new Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
-          new IconTec(
-            icon: Icons.call,
-            tec: "Llamar",
+          IconButton(
+            icon: Icon(
+              Icons.call,
+            ),
+            color: Colors.blue,
+            iconSize: 40.0,
+            onPressed: () {},
           ),
-          new IconTec(icon: Icons.schedule, tec: "Horario"),
-          new IconTec(icon: Icons.photo, tec: "Foto"),
+          IconButton(
+            icon: Icon(Icons.schedule),
+            iconSize: 40.0,
+            color: Colors.blue,
+            onPressed: () {},
+          ),
+          IconButton(
+            icon: Icon(Icons.photo),
+            iconSize: 40.0,
+            color: Colors.blue,
+            onPressed: () {},
+          ),
+          IconButton(
+            icon: Icon(Icons.location_on),
+            iconSize: 40.0,
+            color: Colors.blue,
+            onPressed: () {},
+          ),
         ],
       ),
     );
   }
 }
 
-class Maps extends StatelessWidget {
+/*class Maps extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
       height: 100,
       padding: new EdgeInsets.all(10.0),
-
-        child: RaisedButton(
-          color: Colors.orange,
-          padding: const EdgeInsets.all(10.0),
-          onPressed: (){
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => Location()),
-            );
-          },
-          child: Text('Ubicación'),
-
-        ),
-
-
+      child: RaisedButton(
+        color: Colors.blue,
+        padding: const EdgeInsets.all(10.0),
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => LocationPage()),
+          );
+        },
+        child: Text('Ubicación'),
+      ),
     );
   }
-}
+}*/
 
-class IconTec extends StatelessWidget {
+/*class IconTec extends StatelessWidget {
   IconTec({this.icon, this.tec});
 
-  final IconData icon;
+  final IconButton icon;
   final String tec;
 
   @override
@@ -281,7 +349,7 @@ class IconTec extends StatelessWidget {
       ),
     );
   }
-}
+}*/
 
 class Informacion extends StatelessWidget {
   Informacion({this.descripcion});
@@ -302,9 +370,6 @@ class Informacion extends StatelessWidget {
           ),
         ),
       ),
-
-
     );
   }
 }
-

@@ -54,26 +54,6 @@ class  _ProductListState extends State<ProductList>{
       ),
     );
 
-    final list2 = Expanded(
-      child: GridView.builder(
-        itemBuilder: (BuildContext context, int index) {
-          //if(CategoriesModel == "Iglesias"){
-            print("hola");
-            return SiteCard(publicSite: parques[index]);
-          //}
-
-
-        },
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          crossAxisSpacing: 15.0,
-          mainAxisSpacing: 15.0,
-          childAspectRatio: 0.65,
-        ),
-        itemCount: parques.length,
-      ),
-    );
-
 
     return Container(
       child: Column(
